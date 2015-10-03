@@ -21,8 +21,9 @@ public class Inventory {
         };
 
     }
-
+    boolean concert_achieved = false;
     public void updateQuality() {
+
         for (int i = 0; i < items.length; i++) {
             if (items[i].getName() != "Aged Brie" && items[i].getName() != "Backstage passes to a TAFKAL80ETC concert") {
                 if (items[i].getQuality() > 0) {
@@ -52,21 +53,30 @@ public class Inventory {
             if (items[i].getName() != "Sulfuras, Hand of Ragnaros") {
                 items[i].setSellIn(items[i].getSellIn() - 1);
             }
-
+            if (items[i].getSellIn() == 0 && items[i].getName() == "Backstage passes to a TAFKAL80ETC concert")
+            {
+                concert_achieved = true;
+            }
             if (items[i].getSellIn() < 0) {
-                if (items[i].getName() != "Aged Brie") {
-                    if (items[i].getName() != "Backstage passes to a TAFKAL80ETC concert") {
+                if (items[i].getName() != "Aged Brie" && items[i].getName() != "Backstage passes to a TAFKAL80ETC concert") {
                         if (items[i].getQuality() > 0) {
                             if (items[i].getName() != "Sulfuras, Hand of Ragnaros") {
                                 items[i].setQuality(items[i].getQuality() - 1);
                             }
                         }
                     } else {
+                    if (items[i].getName() == "Backstage passes to a TAFKAL80ETC concert") {
                         items[i].setQuality(items[i].getQuality() - items[i].getQuality());
+
                     }
-                } else {
-                    if (items[i].getQuality() < 50) {
-                        items[i].setQuality(items[i].getQuality() + 1);
+                    if (concert_achieved == true ) {
+
+                        if( items[i].getName()== "Aged Brie")
+                        {
+
+                            items[i].setQuality(items[i].getQuality() - items[i].getQuality());
+                        }
+
                     }
                 }
             }
